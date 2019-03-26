@@ -11,7 +11,7 @@ setuptools.setup(
     description="Gym interface to deepmind_lab environment",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/jkulhanek/gym-maze-env",
+    url="https://github.com/jkulhanek/gym-deepmindlab-env",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
