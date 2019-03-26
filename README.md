@@ -4,7 +4,7 @@ Gym implementation of connector to Deepmind lab
 ## Getting Started
 Install the newest package by running:
 ```
-pip install git+https://github.com/jkulhanek/gym-deepmindlab-env.git
+pip install gym_deepmindlab
 ```
 
 In your project:
