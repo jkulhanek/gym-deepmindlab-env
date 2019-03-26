@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="gym_deepmindlab",
-    version="0.1.1",
+    version="0.1.2",
     author="Jonáš Kulhánek",
     author_email="jonas.kulhanek@live.com",
     description="Gym interface to deepmind_lab environment",
