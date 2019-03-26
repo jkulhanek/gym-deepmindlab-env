@@ -1,4 +1,4 @@
-# Gym wrapped for DeepMind Lab environments
+# Gym wrapper for DeepMind Lab environments
 Gym implementation of connector to Deepmind lab
 
 ## Getting Started
