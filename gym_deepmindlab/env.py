@@ -3,16 +3,7 @@ from gym import error, spaces, utils
 from gym.utils import seeding
 import numpy as np
 import deepmind_lab
-
-def _to_pascal(text):
-    return ''.join(map(lambda x: x.capitalize(), text.split('_')))
-
-LEVELS = ['lt_chasm', 'lt_hallway_slope', 'lt_horseshoe_color', 'lt_space_bounce_hard', \
-'nav_maze_random_goal_01','nav_maze_random_goal_02', 'nav_maze_random_goal_03', 'nav_maze_static_01' \
-'nav_maze_static_02', 'seekavoid_arena_01', 'stairway_to_melon']
-
-
-MAP = { _to_pascal(l):l for l in LEVELS }
+from . import LEVELS, MAP
 
 class DeepmindLabEnv(gym.Env):
     metadata = {'render.modes': ['rgb_array']}
@@ -28,18 +19,22 @@ class DeepmindLabEnv(gym.Env):
             dict(fps = str(60), width = str(width), height = str(height)))
 
         self.action_space = gym.spaces.Discrete(len(ACTION_LIST))
-        self.observation_space = gym.spaces.Box(0, 255, (height, width, 3), dtype = np.int8)
+        self.observation_space = gym.spaces.Box(0, 255, (height, width, 3), dtype = np.uint8)
+
+        self._last_observation = None
 
     def step(self, action):
         reward = self._lab.step(ACTION_LIST[action], num_steps=4)
         terminal = not self._lab.is_running()
         obs = None if terminal else self._lab.observations()[self._colors]
-        return obs, reward, terminal, None
+        self._last_observation = obs if obs is not None else np.copy(self._last_observation)
+        return self._last_observation, reward, terminal, dict()
 
 
     def reset(self):
         self._lab.reset()        
-        return self._lab.observations()[self._colors]
+        self._last_observation = self._lab.observations()[self._colors]
+        return self._last_observation
 
     def seed(self, seed = None):
         self._lab.reset(seed=seed)
